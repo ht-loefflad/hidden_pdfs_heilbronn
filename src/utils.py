@@ -1,4 +1,5 @@
 import os
+from typing import Dict
 
 
 def make_sure_dir_exists(dirname: str):

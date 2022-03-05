@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+from typing import Dict
 
 
 class ProcessingType(Enum):
@@ -12,5 +13,5 @@ class InformationExtractor(ABC):
     TYPE: ProcessingType = ...
 
     @abstractmethod
-    def run(self, json_doc):
+    def run(self, json_doc: Dict):
         pass

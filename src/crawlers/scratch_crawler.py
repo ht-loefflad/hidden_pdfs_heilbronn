@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Dict
 
 import requests
 import re
@@ -14,13 +15,16 @@ class ScratchCrawler(Crawler):
         self._regex = re.compile(regex)
         self._visited_links = []
 
-    def run(self, save_path='pdfs'):
+    def run(self, save_path='pdfs') -> Dict:
         self._visited_links = []
         websites, pdfs = self._crawl_all_websites([self._base_url], [])
         pdfs = [self._download_pdf(pdf_data) for pdf_data in pdfs]
-        res = json.dumps({"Result": pdfs}, indent=4, sort_keys=True)
+        json_doc = {"Result": pdfs}
+        res = json.dumps(json_doc, indent=4, sort_keys=True)
         with open(os.path.join(save_path, "result.json"), 'w') as fd:
             fd.write(res)
+
+        return json_doc
 
     def _download_pdf(self, pdf_data, chunk_size=2000, save_path='pdfs'):
         url = pdf_data['Pdflink']

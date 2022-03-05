@@ -1,5 +1,5 @@
 import re
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 from src.crawlers import Crawler
 
@@ -50,5 +50,5 @@ class BeatifulSoupCrawler(Crawler):
         for website in websites:
             self._crawl_website(website)
 
-    def run(self):
+    def run(self) -> Dict:
         self._crawl_website(self.start_url)
