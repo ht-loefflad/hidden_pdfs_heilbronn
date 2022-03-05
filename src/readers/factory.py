@@ -1,4 +1,4 @@
-from src.readers.json import read_json
+from src.readers.readerjson import read_json
 
 
 def get_reader(type: str):

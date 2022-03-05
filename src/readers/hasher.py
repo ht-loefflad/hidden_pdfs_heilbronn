@@ -1,7 +1,6 @@
 import json
 import os
 
-from pathlib import Path
 from src.information_extraction_engine import InformationExtractor, ProcessingType
 
 
@@ -43,4 +42,5 @@ class Hasher(InformationExtractor):
             else:
                 result["IsDuplicate"] = False
 
-        # TODO: Save duplicat_results
+    def _write_duplicates(self):
+        findduplicaes
