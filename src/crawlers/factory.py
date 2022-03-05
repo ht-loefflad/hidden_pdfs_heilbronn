@@ -1,4 +1,4 @@
-from src.crawlers.ScratchCrawler import ScratchCrawler
+from src.crawlers.scratch_crawler import ScratchCrawler
 from src.crawlers.beatifulsoup import BeatifulSoupCrawler
 
 
