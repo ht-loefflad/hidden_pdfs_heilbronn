@@ -1,16 +1,9 @@
 # check whether duplicate via hash?
 import PyPDF2
-import json
 
-
-class Reader:
-
-    def read_json(self):
-        json_file_obj = open('C:\\Users\\kbr\\Desktop\\testjson.json')
-        data = json.load(json_file_obj)
-        for i in data['Result']:
-            print(i)
-        json_file_obj.close()
+class pdf:
+    def __init__(self):
+        pass
 
     def read_pdf(self):
         # TODO use actually useful pdf
