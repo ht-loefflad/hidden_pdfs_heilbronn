@@ -5,7 +5,7 @@ import pytest
 from src.information_extraction_engine.extract_tables import ExtractTables
 
 
-class TestBeautifulSoupCrawler:
+class TestExtractTables:
 
     @pytest.fixture
     def extract_tables(self):

@@ -17,6 +17,7 @@ class ScratchCrawler(Crawler):
     def run(self, save_path='pdfs'):
         self._visited_links = []
         websites, pdfs = self._crawl_all_websites([self._base_url], [])
+        print('start download')
         pdfs = [self._download_pdf(pdf_data) for pdf_data in pdfs]
         res = json.dumps({"Result": pdfs}, indent=4, sort_keys=True)
         with open(os.path.join(save_path, "result.json"), 'w') as fd:
