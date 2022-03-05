@@ -12,5 +12,5 @@ class InformationExtractor(ABC):
     TYPE: ProcessingType = ...
 
     @abstractmethod
-    def run(self):
+    def run(self, json_doc):
         pass
