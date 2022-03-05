@@ -6,7 +6,6 @@ class pdf:
         pass
 
     def read_pdf(self):
-        # TODO use actually useful pdf
         pdf_file_obj = open('C:\\Users\\kbr\\Downloads\\NgR_Beitrittserklaerung-und-Einzugsermaechtigung.pdf', 'rb')
         pdf_reader = PyPDF2.PdfFileReader(pdf_file_obj)
         print(pdf_reader.numPages)
