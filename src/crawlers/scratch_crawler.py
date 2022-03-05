@@ -32,7 +32,7 @@ class ScratchCrawler(Crawler):
             for chunk in r.iter_content(chunk_size):
                 fd.write(chunk)
         pdf_data['Metadata'] = {
-            'Storagepath': storage_path
+            'Storagepath': os.path.abspath(storage_path)
         }
         return pdf_data
 
