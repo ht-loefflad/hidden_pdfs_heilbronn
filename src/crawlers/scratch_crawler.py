@@ -16,6 +16,7 @@ class ScratchCrawler(Crawler):
         self._visited_links = []
 
     def run(self, save_path='pdfs') -> Dict:
+        print("Crawling")
         self._visited_links = []
         websites, pdfs = self._crawl_all_websites([self._base_url], [])
         print('start download')

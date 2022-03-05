@@ -14,6 +14,7 @@ class WordCounter(InformationExtractor):
         self._regex = re.compile('[a-zA-ZäÄöÖüÜß]{4,}')
 
     def run(self, json_doc):
+        print("Counting words")
         return [self._process(x) for x in json_doc["Result"]]
 
     def _process(self, pdf_info):

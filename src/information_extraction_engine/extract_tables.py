@@ -12,6 +12,7 @@ class ExtractTables(InformationExtractor):
         TYPE = ProcessingType.PreProcessing
 
     def run(self, json_doc):
+        print("Extracting tables")
         base_directory_tables = '../tables'
         self._create_subfolder(base_directory_tables)
         for element in json_doc['Result']:

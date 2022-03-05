@@ -12,6 +12,7 @@ class WordClusterer(InformationExtractor):
     TYPE = ProcessingType.Processing
 
     def run(self, json_doc):
+        print("Clustering words")
         temp = [x for x in json_doc["Result"] if 'Wordcountfile' in x['Metadata'].keys()]
         all_files = [x['Metadata']['Wordcountfile'] for x in temp]
         all_contents = [self._read_json(x) for x in all_files]
@@ -53,13 +54,3 @@ class WordClusterer(InformationExtractor):
         with open(path, 'rb') as f:
             content = f.read().decode('utf8')
             return json.loads(content)
-
-
-counter_object = WordClusterer()
-path = os.path.join('..','..','pdfs','result.json')
-with open(path, 'rb') as f:
-    cont = f.read()
-    content = cont.decode('utf8')
-    res = counter_object.run(json.loads(content))
-with open(path, 'wb') as f:
-    f.write(json.dumps(res, indent=4, sort_keys=True, ensure_ascii=False).encode('utf8'))
