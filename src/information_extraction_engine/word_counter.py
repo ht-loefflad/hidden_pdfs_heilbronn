@@ -57,12 +57,3 @@ class WordCounter(InformationExtractor):
         for word in single_word:
             occurrences[word] = all_words.count(word)
         return occurrences
-
-
-counter_object = WordCounter()
-path = os.path.join('..','..','pdfs','result.json')
-with open(path, 'r') as f:
-    cont = f.read()
-    res = counter_object.run(json.loads(cont))
-with open(path, 'wb') as f:
-    f.write(json.dumps({"Result": res}, indent=4, sort_keys=True, ensure_ascii=False).encode('utf8'))
