@@ -56,13 +56,17 @@ class ScratchCrawler(Crawler):
             return
         print(link)
         self._visited_links.append(link)
-        r = requests.get(link, allow_redirects=True)
-        html = r.content.decode()
-        internal_links = re.findall(self._regex, html)
-        internal_links = [x[9:] for x in internal_links]
-        pdfs = [self._base_url + x for x in internal_links if x.endswith('.pdf')]
-        pdfs = set(pdfs)
-        websites = [self._base_url + x for x in internal_links if x not in pdfs]
-        websites = set(websites)
-        pdf_data = [{"Websitelink": link, "Pdflink": pdf_link} for pdf_link in pdfs]
+        try:
+            r = requests.get(link, allow_redirects=True)
+            html = r.content.decode()
+            internal_links = re.findall(self._regex, html)
+            internal_links = [x[9:] for x in internal_links]
+            pdfs = [self._base_url + x for x in internal_links if x.endswith('.pdf')]
+            pdfs = set(pdfs)
+            websites = [self._base_url + x for x in internal_links if x not in pdfs]
+            websites = set(websites)
+            pdf_data = [{"Websitelink": link, "Pdflink": pdf_link} for pdf_link in pdfs]
+        except:
+            websites = []
+            pdf_data = []
         return websites, pdf_data
