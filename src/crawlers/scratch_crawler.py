@@ -9,13 +9,14 @@ from src.crawlers import Crawler
 
 
 class ScratchCrawler(Crawler):
-    def __init__(self):
+    def __init__(self, result_dirpath: str):
+        super().__init__(result_dirpath)
         self._base_url = 'https://www.heilbronn.de/'
         regex = '<a href="[\/,\w,\.,\w]+'
         self._regex = re.compile(regex)
         self._visited_links = []
 
-    def run(self, save_path='pdfs') -> Dict:
+    def run(self) -> Dict:
         print("Crawling")
         self._visited_links = []
         websites, pdfs = self._crawl_all_websites([self._base_url], [])
@@ -23,15 +24,15 @@ class ScratchCrawler(Crawler):
         pdfs = [self._download_pdf(pdf_data) for pdf_data in pdfs]
         json_doc = {"Result": pdfs}
         res = json.dumps(json_doc, indent=4, sort_keys=True)
-        with open(os.path.join(save_path, "result.json"), 'w') as fd:
+        with open(os.path.join(self.result_dirpath, "result.json"), 'w') as fd:
             fd.write(res)
 
         return json_doc
 
-    def _download_pdf(self, pdf_data, chunk_size=2000, save_path='pdfs'):
+    def _download_pdf(self, pdf_data, chunk_size=2000):
         url = pdf_data['Pdflink']
         storage_path = url.split('/')[-1]
-        storage_path = os.path.join(save_path, storage_path)
+        storage_path = os.path.join(self.result_dirpath, "pdfs", storage_path)
         r = requests.get(url, stream=True)
 
         with open(storage_path, 'wb') as fd:

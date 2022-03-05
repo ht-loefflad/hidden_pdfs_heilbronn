@@ -2,17 +2,19 @@ import json
 import os
 import re
 from copy import copy
+from typing import Dict
 
 import PyPDF2
-from src.information_extraction_engine import InformationExtractor, ProcessingType
+from src.information_extraction import InformationExtractor, ProcessingType
 
 
 class WordClusterer(InformationExtractor):
-
     TYPE = ProcessingType.Processing
 
-    def run(self, json_doc):
-        print("Clustering words")
+    def __init__(self, result_dirpath, name):
+        super().__init__(result_dirpath, name)
+
+    def run(self, json_doc) -> Dict:
         temp = [x for x in json_doc["Result"] if 'Wordcountfile' in x['Metadata'].keys()]
         all_files = [x['Metadata']['Wordcountfile'] for x in temp]
         all_contents = [self._read_json(x) for x in all_files]
