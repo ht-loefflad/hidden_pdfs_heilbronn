@@ -1,7 +1,10 @@
 from src.crawlers.factory import get_crawler
-from src.readers.factory import get_reader
+from src.utils import make_sure_dir_exists
+
+RESULT_DIR = "pdfs"
+CRAWLER = "scratch"
 
 if __name__ == '__main__':
-    crawler = get_crawler("beatiful_soup")
+    make_sure_dir_exists(RESULT_DIR)
+    crawler = get_crawler("scratch")
     crawler.run()
-
