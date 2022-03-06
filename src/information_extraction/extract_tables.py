@@ -1,25 +1,28 @@
 import os.path
+from typing import Dict
 
 import pandas as pd
 import tabula
 # from src.utils import read_json
 
-from src.information_extraction_engine import InformationExtractor, ProcessingType
+from src.information_extraction import InformationExtractor, ProcessingType
 
 
 class ExtractTables(InformationExtractor):
-    def __init__(self):
-        TYPE = ProcessingType.PreProcessing
+    TYPE = ProcessingType.PreProcessing
 
-    def run(self, json_doc):
-        base_directory_tables = '../tables'
+    def __init__(self, result_dirpath, name):
+        super().__init__(result_dirpath, name)
+
+    def run(self, json_doc) -> Dict:
+        base_directory_tables = os.path.join(self.result_dirpath, 'tables')
         self._create_subfolder(base_directory_tables)
         for element in json_doc['Result']:
             # create sub-folders
             storage_path = element['Metadata']['Storagepath']
             directory_name = self._extract_file_name(storage_path)
             print(directory_name)
-            tables_path = f'{base_directory_tables}/{directory_name}'
+            tables_path = os.path.join(base_directory_tables, directory_name)
             self._create_subfolder(tables_path)
 
             # extract all tables in a list
@@ -27,6 +30,8 @@ class ExtractTables(InformationExtractor):
 
             # save extracted tables
             self._export_tables(df_list, tables_path)
+
+        return json_doc
 
     def _extract_tables(self, doc_path):
         df_list = []
