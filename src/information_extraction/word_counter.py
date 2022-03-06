@@ -10,12 +10,16 @@ from src.information_extraction import InformationExtractor, ProcessingType
 class WordCounter(InformationExtractor):
     TYPE = ProcessingType.PreProcessing
 
-    def __init__(self, result_dirpath: str, name: str):
+    def __init__(self, result_dirpath: str, name: str, debug: bool = False):
         super().__init__(result_dirpath, name)
+        self.debug = debug
         self._regex = re.compile('[a-zA-ZäÄöÖüÜß]{4,}')
 
     def run(self, json_doc) -> Dict:
-        json_doc["Result"] = [self._process(x) for x in json_doc["Result"][:10]]  # TODO: Remove [:10]
+        if self.debug:
+            json_doc["Result"] = [self._process(x) for x in json_doc["Result"][:10]]
+        else:
+            json_doc["Result"] = [self._process(x) for x in json_doc["Result"]]
 
         return json_doc
 

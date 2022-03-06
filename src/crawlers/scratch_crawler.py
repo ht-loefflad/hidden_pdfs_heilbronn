@@ -6,6 +6,7 @@ import requests
 import re
 
 from src.crawlers import Crawler
+from src.utils import make_sure_dir_exists
 
 
 class ScratchCrawler(Crawler):
@@ -32,7 +33,9 @@ class ScratchCrawler(Crawler):
     def _download_pdf(self, pdf_data, chunk_size=2000):
         url = pdf_data['Pdflink']
         storage_path = url.split('/')[-1]
-        storage_path = os.path.join(self.result_dirpath, "pdfs", storage_path)
+        pdf_dirpath = os.path.join(self.result_dirpath, "pdfs")
+        make_sure_dir_exists(pdf_dirpath)
+        storage_path = os.path.join(pdf_dirpath, storage_path)
         r = requests.get(url, stream=True)
 
         with open(storage_path, 'wb') as fd:
