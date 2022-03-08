@@ -1,20 +1,27 @@
 import json
 import os
 import re
+from typing import Dict
 
 import PyPDF2
-from src.information_extraction_engine import InformationExtractor, ProcessingType
+from src.information_extraction import InformationExtractor, ProcessingType
 
 
 class WordCounter(InformationExtractor):
-
     TYPE = ProcessingType.PreProcessing
 
-    def __init__(self):
+    def __init__(self, result_dirpath: str, name: str, debug: bool = False):
+        super().__init__(result_dirpath, name)
+        self.debug = debug
         self._regex = re.compile('[a-zA-ZäÄöÖüÜß]{4,}')
 
-    def run(self, json_doc):
-        return [self._process(x) for x in json_doc["Result"]]
+    def run(self, json_doc) -> Dict:
+        if self.debug:
+            json_doc["Result"] = [self._process(x) for x in json_doc["Result"][:10]]
+        else:
+            json_doc["Result"] = [self._process(x) for x in json_doc["Result"]]
+
+        return json_doc
 
     def _process(self, pdf_info):
         print(pdf_info['Metadata']['Storagepath'])

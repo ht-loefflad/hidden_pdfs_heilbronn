@@ -1,11 +1,15 @@
+import json
+import os
+
 import pytest
 
-from src.information_extraction_engine.runner import InformationExtractionEngineRunner
 
+class TestConfig:
+    result_dirpath = os.path.join("tests", "results")
+    json_doc_long_filepath = os.path.join("results", "result.json")
 
-class TestInformationExtractionEngineRunner:
     @pytest.fixture
-    def json_doc(self):
+    def json_doc_short(self):
         return {
             "Result": [
                 {
@@ -40,8 +44,8 @@ class TestInformationExtractionEngineRunner:
         }
 
     @pytest.fixture
-    def iee_runner(self):
-        return InformationExtractionEngineRunner()
+    def json_doc_long(self):
+        with open(self.json_doc_long_filepath, "r") as file:
+            json_doc = json.load(file)
 
-    def test_run_engine(self, iee_runner, json_doc):
-        iee_runner.run_engine(json_doc)
+        return json_doc

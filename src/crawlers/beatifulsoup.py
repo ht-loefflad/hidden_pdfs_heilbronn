@@ -8,7 +8,13 @@ import urllib.request
 import json
 
 class BeatifulSoupCrawler(Crawler):
-    def __init__(self, start_url: str = "https://www.heilbronn.de/sitemap.html", base_url: str = "https://www.heilbronn.de"):
+    def __init__(
+            self,
+            result_dirpath: str,
+            start_url: str = "https://www.heilbronn.de/sitemap.html",
+            base_url: str = "https://www.heilbronn.de"
+    ):
+        super().__init__(result_dirpath)
         self.start_url = start_url
         self.base_url = base_url
         self.websites = []

@@ -1,15 +1,21 @@
 import json
 import os
+from typing import Dict
 
-from src.information_extraction_engine import InformationExtractor, ProcessingType
+from src.information_extraction import InformationExtractor, ProcessingType
 
 
 class Hasher(InformationExtractor):
     TYPE = ProcessingType.PreProcessing
 
-    def run(self, json_doc):
+    def __init__(self, result_dirpath, name):
+        super().__init__(result_dirpath, name)
+
+    def run(self, json_doc) -> Dict:
         self._create_hash_codes(json_doc)
         self._check_for_duplicates(json_doc)
+
+        return json_doc
 
     def _create_hash_codes(self, json_doc):
         for result in json_doc["Result"]:
@@ -41,6 +47,3 @@ class Hasher(InformationExtractor):
                 duplicate_results.append(result)
             else:
                 result["IsDuplicate"] = False
-
-    def _write_duplicates(self):
-        findduplicaes

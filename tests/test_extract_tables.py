@@ -1,15 +1,14 @@
-import json
-
 import pytest
 
-from src.information_extraction_engine.extract_tables import ExtractTables
+from src.information_extraction.extract_tables import ExtractTables
+from tests.test_config import TestConfig
 
 
-class TestExtractTables:
+class TestExtractTables(TestConfig):
 
     @pytest.fixture
     def extract_tables(self):
-        extract_tables = ExtractTables()
+        extract_tables = ExtractTables(self.result_dirpath, "ExtractTables")
         return extract_tables
 
     def test_extract_tables(self, extract_tables):
@@ -21,7 +20,6 @@ class TestExtractTables:
         # print(df)
         extract_tables._export_tables(df_list, '../results')
 
-    def test_run(self, extract_tables):
-        fp = open('../pdfs/result.json')
-        json_doc = json.load(fp)
-        extract_tables.run(json_doc)
+    def test_run(self, extract_tables, json_doc_long):
+        json_doc_long["Result"] = json_doc_long["Result"][:20]
+        extract_tables.run(json_doc_long)
